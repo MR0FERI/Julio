@@ -1,0 +1,632 @@
+/* --- :root Variables --- */
+:root {
+  --primary-color: #00695c; /* Verde principal */
+  --primary-dark: #004d40;  /* Verde oscuro para hover/focus */
+  --secondary-color: #00796b; /* Verde secundario para títulos, enlaces */
+  --accent-color: #4caf50; /* Verde acento (ej. botón 'ver') */
+  --accent-dark: #388e3c;
+  --info-color: #0288d1; /* Azul para enlaces externos */
+  --info-dark: #01579b;
+
+  --bg-light: #ffffff; /* Fondo contenido principal */
+  --bg-page: #f4f4f4;  /* Fondo general de la página */
+  --bg-subtle: #f9f9f9; /* Fondo para secciones/formularios */
+
+  --text-dark: #333;
+  --text-medium: #555;
+  --text-light: #ffffff;
+  --border-color: #ddd;
+
+  --font-family-base: Arial, sans-serif;
+  --line-height-base: 1.6;
+  --font-size-base: 16px; /* Base para rem/em si se usan */
+  --font-size-h1: 2.2em;
+  --font-size-h2: 1.8em;
+  --font-size-h3: 1.4em;
+  --font-size-p: 1.1em;
+
+  --sidebar-width: 220px;
+  --topbar-height: 80px; /* Ajustada */
+  --footer-height: 50px; /* Estimada */
+
+  --radius-base: 8px;
+  --radius-small: 5px;
+  --radius-round: 50%;
+  --radius-pill: 30px;
+
+  --shadow-base: 0 2px 6px rgba(0,0,0,0.1);
+  --shadow-light: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-strong: 0 4px 10px rgba(0,0,0,0.15);
+
+  --focus-outline: 2px solid var(--primary-dark);
+  --focus-offset: 2px;
+}
+
+/* --- Reset y Estilos Generales --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-base);
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  padding-top: var(--topbar-height); /* Espacio para topbar fijo */
+  padding-bottom: var(--footer-height); /* Espacio para footer fijo */
+  transition: margin-left 0.3s ease; /* Para animación sidebar */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Evita espacio extra debajo */
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* --- Estilos de Foco (Accesibilidad) --- */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+  box-shadow: 0 0 0 var(--focus-offset) var(--primary-dark); /* Alternativa más visible */
+}
+/* Quitar outline si se provee otro indicador visual claro */
+input[type="checkbox"]:focus + label {
+   outline: var(--focus-outline);
+   outline-offset: var(--focus-offset);
+}
+
+
+/* --- Header / Topbar --- */
+.topbar {
+  display: flex;
+  /* Por defecto en columna para móvil, se cambia en media query */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--topbar-height);
+  z-index: 1002;
+  box-shadow: var(--shadow-base);
+  gap: 5px;
+}
+
+.logo-container { /* Contenedor para logo y nombre */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+  height: 45px; /* Ajustado para nueva altura topbar */
+  width: 45px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.company-name {
+  font-size: 1.5em; /* Ajustado */
+  font-weight: bold;
+  color: var(--text-light);
+  margin: 0; /* Resetear margen h1 */
+  line-height: 1.2;
+}
+
+/* --- Sidebar / Navegación --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: var(--primary-color);
+  padding: calc(var(--topbar-height) + 20px) 20px 20px; /* Espacio para topbar */
+  color: var(--text-light);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000; /* Debajo del topbar pero sobre el contenido */
+  overflow-y: auto; /* Scroll si el contenido es largo */
+}
+
+.sidebar h2 {
+  color: var(--text-light);
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+.sidebar a {
+  display: block;
+  color: var(--text-light);
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: var(--radius-small);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active { /* Estilo para link activo */
+  background-color: var(--primary-dark);
+  transform: translateX(5px);
+  text-decoration: none; /* Quitar subrayado en hover */
+}
+
+.sidebar a.active {
+    font-weight: bold;
+}
+
+/* --- Menú Hamburguesa (Control Sidebar) --- */
+#toggle-menu {
+  display: none; /* Oculta el checkbox */
+}
+
+.menu-icon {
+  position: fixed; /* Fijo respecto a la ventana */
+  top: calc((var(--topbar-height) - 44px) / 2); /* Centrado vertical en topbar */
+  left: 15px;
+  z-index: 1003; /* Encima de todo */
+  font-size: 1.8em;
+  padding: 5px 10px;
+  background-color: transparent; /* Integrado en topbar */
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Feedback visual */
+}
+
+/* Mostrar sidebar y empujar contenido cuando el checkbox está activo */
+#toggle-menu:checked ~ .sidebar {
+  transform: translateX(0);
+}
+#toggle-menu:checked ~ main.content {
+   /* Solo empujar en pantallas más grandes */
+}
+/* Body padding adjustment when sidebar is open (optional, complex) */
+/* #toggle-menu:checked ~ body { padding-left: var(--sidebar-width); } */
+
+/* --- Contenido Principal --- */
+main.content {
+  padding: 20px; /* Padding superior ya aplicado al body */
+  margin-left: 0; /* Se ajusta con media query */
+  transition: margin-left 0.3s ease;
+  background-color: var(--bg-light);
+  box-shadow: var(--shadow-base);
+  border-radius: var(--radius-base);
+  /* Añadir margen para que no quede pegado al footer */
+  margin-bottom: calc(var(--footer-height) + 20px);
+  /* Mínimo de altura para que el footer no suba en páginas cortas */
+  min-height: calc(100vh - var(--topbar-height) - var(--footer-height) - 40px); /* vh - top - foot - paddings */
+}
+
+/* Encabezados y Párrafos */
+main.content h1 {
+  font-size: var(--font-size-h1);
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 10px;
+}
+
+main.content h2 {
+  font-size: var(--font-size-h2);
+  color: var(--primary-color);
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+main.content h3 {
+    font-size: var(--font-size-h3);
+    color: var(--primary-dark);
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+main.content p {
+  font-size: var(--font-size-p);
+  color: var(--text-medium);
+  margin-bottom: 15px;
+}
+
+main.content ul,
+main.content ol,
+main.content dl { /* Estilo para listas */
+  padding-left: 30px; /* Más indentación */
+  margin-bottom: 15px;
+}
+
+main.content li,
+main.content dd {
+  margin-bottom: 8px;
+  color: var(--text-medium);
+}
+main.content dt {
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-top: 15px;
+}
+
+main.content article {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+main.content article:last-of-type {
+    border-bottom: none;
+}
+
+main.content time {
+    font-style: italic;
+    color: #777;
+}
+
+/* --- Formularios --- */
+.form-section { /* Contenedor general para formularios */
+  background: var(--bg-subtle);
+  padding: 25px;
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-light);
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block; /* Asegura que esté en su propia línea */
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-small);
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.2); /* Sombra suave al enfocar */
+  /* Outline ya definido globalmente */
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Botones */
+.boton {
+  display: inline-block; /* Para poder aplicar padding y margen */
+  padding: 10px 20px;
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  text-decoration: none; /* Para botones que son enlaces */
+}
+
+.boton:hover {
+  background-color: var(--primary-color);
+  text-decoration: none;
+  transform: translateY(-1px); /* Efecto sutil */
+}
+
+.boton:active {
+    transform: translateY(0px); /* Resetear en click */
+}
+
+.boton.grande { /* Para botón de envío principal */
+  width: 100%;
+  padding: 14px;
+  font-size: 1.2em;
+}
+
+/* --- Página de Contacto --- */
+.contact-flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se muevan abajo en pantallas pequeñas */
+  gap: 30px; /* Espacio entre columnas */
+  margin-top: 20px;
+}
+
+.contact-form-section,
+.contact-info-section {
+  flex: 1 1 350px; /* Crece, encoge, base de 350px */
+  min-width: 300px; /* Ancho mínimo antes de envolver */
+  background: var(--bg-subtle);
+  padding: 25px;
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-light);
+}
+
+.contact-details {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.contact-details li {
+  margin-bottom: 12px;
+  font-size: 1.1em;
+  display: flex; /* Alinear icono y texto */
+  align-items: center;
+  gap: 10px; /* Espacio entre icono y texto */
+}
+
+.contact-details i {
+  color: var(--primary-color);
+  font-size: 1.3em;
+  width: 20px; /* Ancho fijo para alinear texto */
+  text-align: center;
+}
+
+.map-container {
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-base);
+  overflow: hidden; /* Para que el iframe respete el borde redondeado */
+  box-shadow: var(--shadow-light);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 300px;
+  border: 0;
+  display: block; /* Evitar espacio fantasma */
+}
+.map-container p {
+  font-size: 0.9em;
+  color: var(--text-medium);
+  padding: 10px;
+  text-align: center;
+  margin: 0;
+  background-color: #eee;
+}
+
+
+/* --- Página de Recursos --- */
+.resource-category {
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: var(--bg-subtle);
+  border-left: 5px solid var(--primary-color);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-light);
+}
+
+.resource-category h2 {
+  display: flex;
+  align-items: center;
+  font-size: 1.6em;
+  color: var(--primary-color);
+  margin-top: 0; /* Resetear margen superior en este contexto */
+  margin-bottom: 20px;
+}
+
+.resource-category h2 i {
+  margin-right: 12px;
+  font-size: 1.1em; /* Icono ligeramente más pequeño que el texto */
+}
+
+.resource-list {
+  list-style: none;
+  padding: 0;
+}
+
+.resource-list li {
+  background: var(--bg-light);
+  margin-bottom: 15px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-light);
+  display: flex; /* Usar flex para alinear icono y contenido */
+  gap: 15px;
+}
+
+.resource-list li > i { /* Icono principal del recurso */
+  color: var(--primary-color);
+  font-size: 1.8em; /* Icono más grande */
+  margin-top: 5px; /* Alinear verticalmente un poco mejor */
+}
+
+.resource-content { /* Contenedor para texto y botón */
+    flex-grow: 1;
+}
+
+.resource-list strong {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: var(--text-dark);
+}
+
+.resource-list p {
+  font-size: 1em;
+  color: var(--text-medium);
+  margin-bottom: 15px;
+}
+
+.resource-link {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, transform 0.1s;
+  font-size: 0.95em;
+  color: var(--text-light); /* Color de texto por defecto blanco */
+}
+.resource-link:hover {
+    text-decoration: none; /* Sin subrayado */
+    transform: translateY(-1px);
+}
+.resource-link:active {
+    transform: translateY(0px);
+}
+
+.resource-link.download {
+  background-color: var(--primary-color);
+}
+.resource-link.download:hover {
+  background-color: var(--primary-dark);
+}
+
+.resource-link.view {
+  background-color: var(--accent-color);
+}
+.resource-link.view:hover {
+  background-color: var(--accent-dark);
+}
+
+.resource-link.external {
+  background-color: var(--info-color);
+}
+.resource-link.external:hover {
+  background-color: var(--info-dark);
+}
+
+
+/* --- Footer --- */
+.social-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary-color);
+  text-align: center;
+  padding: 10px 0;
+  height: var(--footer-height);
+  z-index: 1001; /* Encima del contenido, debajo de sidebar/topbar */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Sombra superior */
+}
+
+.social-footer a {
+  color: var(--text-light);
+  margin: 0 15px;
+  font-size: 1.6em;
+  transition: color 0.3s, transform 0.2s;
+  display: inline-block; /* Para permitir transform */
+}
+
+.social-footer a:hover {
+  color: var(--primary-dark);
+  transform: scale(1.1); /* Agrandar icono en hover */
+  text-decoration: none;
+}
+
+/* --- Media Queries (Responsividad) --- */
+
+/* Estilos base son mobile-first (o casi) */
+
+/* Tablets y Escritorios Pequeños */
+@media (min-width: 768px) {
+  :root {
+    --topbar-height: 60px; /* Más compacto en pantallas grandes */
+  }
+
+  .topbar {
+    flex-direction: row; /* Elementos en línea */
+    justify-content: space-between; /* Icono a la izquierda, logo/nombre a la derecha */
+    align-items: center;
+    padding: 0 30px; /* Más padding horizontal */
+    height: var(--topbar-height);
+  }
+
+  .logo-container {
+      /* Se posiciona automáticamente por space-between */
+  }
+  .logo { height: 40px; width: 40px;}
+  .company-name { font-size: 1.6em; }
+
+  .menu-icon {
+    position: static; /* Ya no necesita ser fijo dentro del topbar */
+    /* Ajusta tamaño si es necesario */
+  }
+
+  .sidebar {
+     padding-top: calc(var(--topbar-height) + 30px);
+     box-shadow: var(--shadow-strong); /* Sombra más pronunciada */
+  }
+
+  /* Empujar el contenido cuando el menú está abierto en pantallas grandes */
+  #toggle-menu:checked ~ main.content {
+    margin-left: var(--sidebar-width);
+  }
+   /* #toggle-menu:checked ~ .social-footer { margin-left: var(--sidebar-width); } */ /* Opcional: empujar footer */
+
+  main.content {
+     padding: 30px 40px; /* Más padding */
+     /* Ajustar margen si el footer se empuja */
+     /* margin-bottom: calc(var(--footer-height) + 30px); */
+  }
+
+   h1 { font-size: 2.5em; }
+   h2 { font-size: 2em; }
+   h3 { font-size: 1.6em; }
+}
+
+/* Escritorios Grandes */
+@media (min-width: 1024px) {
+  main.content {
+    max-width: 1200px; /* Ancho máximo para el contenido */
+    margin-right: auto;
+    margin-left: auto; /* Centrar contenido */
+    /* Ajustar margen si sidebar está abierto */
+  }
+  #toggle-menu:checked ~ main.content {
+     margin-left: calc(max(auto, var(--sidebar-width))); /* Centrado complejo con sidebar */
+     /* Simplificación: Podría no centrarse cuando el sidebar está abierto */
+     /* O hacer que el body se desplace */
+  }
+}

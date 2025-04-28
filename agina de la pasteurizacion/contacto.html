@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ponte en contacto con Biolacteos. Envíanos tus preguntas o comentarios a través de nuestro formulario, o encuentra nuestra información de contacto y ubicación.">
+  <title>Contacto | Biolacteos Pasteurización</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+<input type="checkbox" id="toggle-menu">
+
+<header class="topbar">
+  <label for="toggle-menu" class="menu-icon" aria-label="Abrir menú de navegación"><i class="fas fa-bars"></i></label>
+   <div class="logo-container">
+      <img src="img/logo.png" alt="Logo Biolacteos" class="logo" />
+      <h1 class="company-name">Biolacteos</h1>
+    </div>
+</header>
+
+<nav class="sidebar" aria-label="Navegación principal">
+  <h2>Pasteurización</h2>
+  <a href="index.html">Inicio</a>
+  <a href="sobre-nosotros.html">Sobre Nosotros</a>
+  <a href="noticios.html">Noticias</a>
+  <a href="recursos.html">Recursos</a>
+  <a href="faq.html">Preguntas Frecuentes</a>
+  <a href="contacto.html" class="active">Contacto</a>
+</nav>
+
+<main class="content contact-main">
+  <h1>Contáctanos</h1>
+  <p>¿Tienes preguntas, sugerencias o comentarios? Nos encantaría saber de ti. Utiliza el formulario a continuación o nuestros datos de contacto.</p>
+
+  <div class="contact-flex-container">
+    <section class="contact-form-section form-section" aria-labelledby="form-titulo">
+      <h2 id="form-titulo"><i class="fas fa-envelope"></i> Envíanos un Mensaje</h2>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo Electrónico:</label>
+          <input type="email" id="email" name="email" required placeholder="tuemail@ejemplo.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"> </div>
+
+        <div class="form-group">
+          <label for="asunto">Asunto:</label>
+          <input type="text" id="asunto" name="asunto" required placeholder="Motivo de tu consulta">
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje:</label>
+          <textarea id="mensaje" name="mensaje" rows="6" required placeholder="Escribe tu mensaje aquí..."></textarea>
+        </div>
+
+        <button class="boton grande" type="submit">Enviar Mensaje</button>
+      </form>
+    </section>
+
+    <section class="contact-info-section" aria-labelledby="info-titulo">
+      <h2 id="info-titulo"><i class="fas fa-info-circle"></i> Información de Contacto</h2>
+      <ul class="contact-details">
+        <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:contacto@pasteurizacion.org">contacto@pasteurizacion.org</a></li>
+        <li><i class="fas fa-phone"></i> <a href="tel:+18294542976">+1 829 454 2976</a></li>
+        <li><i class="fas fa-map-marker-alt"></i> <span>C. Pepe Alvarez, Villa Rosa, La Vega, República Dominicana</span></li> </ul>
+
+      <h3><i class="fas fa-map-marked-alt"></i> Nuestra Ubicación</h3>
+      <div class="map-container">
+         <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.777717551058!2d-70.5301616850994!3d19.22199198697198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb036e8e1a0b20b%3A0x49e6a8a4a0b8e5f2!2sLa%20Vega%2C%20Dominican%20Republic!5e0!3m2!1sen!2sdo!4v1678886400000!5m2!1sen!2sdo"
+            width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" title="Mapa de ubicación de Biolacteos">
+        </iframe>
+        <p><small>Mapa de ubicación (aproximada).</small></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="social-footer">
+  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestra página de Facebook"><i class="fab fa-facebook"></i></a>
+  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Mira nuestro Instagram"><i class="fab fa-instagram"></i></a>
+</footer>
+
+</body>
+</html>
+
