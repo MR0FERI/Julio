@@ -1,4 +1,3 @@
-/* style.css */
 :root {
   --primary-color: #00695c;
   --primary-dark: #004d40;
@@ -573,10 +572,9 @@ main.content .faq-item dd {
     margin-top: 10px;
     color: var(--text-medium);
 }
-/* --- Estilos para Imágenes Añadidas --- */
 
 .content-image {
-  max-width: 100%; /* Asegura responsividad */
+  max-width: 100%; 
   height: auto;
   border-radius: var(--radius-base);
   margin-top: 15px;
@@ -588,43 +586,39 @@ main.content .faq-item dd {
   float: right;
   margin-left: 20px;
   margin-bottom: 10px;
-  max-width: 40%; /* Ajusta el tamaño como prefieras */
+  max-width: 40%; 
 }
 
 .image-left {
   float: left;
   margin-right: 20px;
   margin-bottom: 10px;
-  max-width: 40%; /* Ajusta el tamaño como prefieras */
+  max-width: 40%; 
 }
 
-/* Clearfix para evitar que el texto rodee incorrectamente */
-/* Aplicar a contenedores que tengan elementos flotantes */
 .clearfix::after {
   content: "";
   clear: both;
   display: table;
 }
 
-/* Ajustes específicos para imágenes en artículos/secciones */
 main.content article .content-image,
 main.content section .content-image {
-  max-width: 300px; /* Limitar tamaño en artículos */
-  display: block; /* Evitar float por defecto aquí */
+  max-width: 300px; 
+  display: block; 
   margin-left: auto;
   margin-right: auto;
 }
 
-.equipo-miembro img { /* Si añades fotos al equipo */
+.equipo-miembro img {
     width: 100px;
     height: 100px;
     border-radius: var(--radius-round);
     object-fit: cover;
-    margin: 0 auto 10px; /* Centrar y dar espacio abajo */
+    margin: 0 auto 10px;
     display: block;
 }
 
-/* Ajustar layout para imágenes flotantes en pantallas pequeñas */
 @media (max-width: 600px) {
   .image-right,
   .image-left {
